@@ -12,12 +12,42 @@
 
 using namespace std ;
 
-vector<string> &split( const string &s , char delim , vector <string> &elems ) ;
-vector<string> split( const string &s , char delim ) ;
-void displayGame( ChessBoard myBoard ) ;
+void displayGame( ChessBoard myBoard )
+{
+	vector <char> temp = myBoard.getBoard( ) ;
+	std::cout << "\n\n\n" ;
+	int k = 8 ;
+	for( int i = temp.size( ) - 1 ; i >= 0 ; i -= 8 )
+	{
+		cout << k-- << "\t" ; 
+		for( int j = i - 7 ; j <= i ; j++ )
+			std::cout << temp.at( j ) << "\t" ;
+		cout << "\n\n\n\n\n" ;
+	}
+	cout << "\n\ta\tb\tc\td\te\tf\tg\th\n\n\n\n" ;
+}
+
+vector<string> &split( const string &s , char delim , vector<string> &elems ) 
+{
+    stringstream ss ( s ) ;
+    string item ;
+    while ( getline ( ss , item , delim ) ) {
+		if ( item != "" )
+			elems.push_back ( item ) ;
+    }
+    return elems ;
+}
+
+vector<string> split( const string &s , char delim ) 
+{
+    std::vector<std::string> elems ;
+    split( s , delim , elems ) ;
+    return elems ;
+}
 
 int main( ) {
 	ifstream myfile ( "D:\\MalakaGL\\Chess\\game6.txt" ) ;
+	//ifstream myfile ( "E:\\Training\\ChessApplication\\game.txt" ) ;
 	ChessBoard myBoard ;
 	string line ;
 
@@ -42,7 +72,7 @@ int main( ) {
 				
 				if ( myBoard.isValid(temp.at(1)))
 				{
-					myBoard.move(temp.at(1));
+					myBoard.move( temp.at( 1 ) ) ;
 					displayGame( myBoard ) ;
 				}
 				else
@@ -50,9 +80,9 @@ int main( ) {
 					cout << "\nErrorneous move by white player at line " << lineNumber << "\n" << temp.at( 1 ) ;
 					break ;
 				}
-				if ( myBoard.isValid(temp.at(2)))
+				if ( myBoard.isValid( temp.at( 2 ) ) )
 				{
-					myBoard.move(temp.at(2));
+					myBoard.move( temp.at( 2 ) ) ;
 					displayGame( myBoard ) ;
 				}
 				else
@@ -77,36 +107,5 @@ int main( ) {
 	cout << "\nFinal state of the board.\n\n" ;
 	displayGame( myBoard ) ;
 
-	return 0;
-}
-
-vector<string> &split(const string &s, char delim, vector<string> &elems) {
-    stringstream ss ( s ) ;
-    string item ;
-    while ( getline ( ss , item , delim ) ) {
-		if ( item != "" )
-			elems.push_back ( item ) ;
-    }
-    return elems;
-}
-
-vector<string> split(const string &s, char delim) {
-    std::vector<std::string> elems;
-    split(s, delim, elems);
-    return elems;
-}
-
-void displayGame( ChessBoard myBoard )
-{
-	vector <char> temp = myBoard.getBoard( ) ;
-	std::cout << "\n\n\n" ;
-	int k = 8 ;
-	for( int i = temp.size( ) - 1 ; i >= 0 ; i -= 8 )
-	{
-		cout << k-- << "\t" ; 
-		for( int j = i - 7 ; j < i ; j++ )
-			std::cout << temp.at( j ) << "\t" ;
-		cout << "\n\n" ;
-	}
-	cout << "\n\tA\tB\tC\tD\tE\tF\tG\n\n\n\n" ;
+	return 0 ;
 }
